@@ -508,7 +508,446 @@ The estimated delivery time is 8 to 12 weeks depending on data readiness, approv
 | Representative app, tracking, and zones | 2 weeks |
 | Testing, revisions, deployment, and training | 1 to 2 weeks |
 
-## 20. Important Notes Before Implementation
+
+## 20. Complete Operational Workflow by Zones, Representatives, and Customers
+
+This scenario explains a full operating day. Assume there are five operating zones. Each zone has ten customers and five sales representatives. This means the organization manages fifty customers and twenty-five representatives during the operating day.
+
+### 20.1 Zone Distribution
+
+```text
+Organization
+│
+├── Zone 1
+│   ├── 10 customers
+│   └── 5 representatives
+│
+├── Zone 2
+│   ├── 10 customers
+│   └── 5 representatives
+│
+├── Zone 3
+│   ├── 10 customers
+│   └── 5 representatives
+│
+├── Zone 4
+│   ├── 10 customers
+│   └── 5 representatives
+│
+└── Zone 5
+    ├── 10 customers
+    └── 5 representatives
+```
+
+### 20.2 Full Day Cycle from the First Step
+
+```text
+Prepare master data
+↓
+Open the operating day
+↓
+Receive customer orders from the existing app, website, admin, or representative
+↓
+Detect the customer zone from location
+↓
+Assign the order to the suitable representative in the zone
+↓
+Validate balance and credit limit
+↓
+Validate stock in the correct section
+↓
+Approve the order
+↓
+Pick the order in the warehouse
+↓
+Pack and prepare for delivery
+↓
+Hand shipments to representatives
+↓
+Start phone-based representative tracking
+↓
+Start daily route
+↓
+Visit customers one by one
+↓
+Deliver goods or record delivery failure
+↓
+Issue invoice and collect cash or post credit
+↓
+Update stock and customer balance automatically
+↓
+End representative day
+↓
+Settle collected cash
+↓
+Management reviews reports
+↓
+Close the day
+```
+
+### 20.3 Detailed Example for One Zone
+
+Zone 1 has ten customers and five representatives. Customers can be distributed by geographic proximity and order volume.
+
+| Representative | Customers | Expected work |
+|---|---:|---|
+| Representative 1 | Customer 1 and Customer 2 | Delivery and collection |
+| Representative 2 | Customer 3 and Customer 4 | Delivery only |
+| Representative 3 | Customer 5 and Customer 6 | Old debt collection and follow-up |
+| Representative 4 | Customer 7 and Customer 8 | New orders and delivery |
+| Representative 5 | Customer 9 and Customer 10 | Returns and collection |
+
+```text
+Zone Supervisor
+│
+├── Representative 1 ← Customer 1 ← Customer 2
+├── Representative 2 ← Customer 3 ← Customer 4
+├── Representative 3 ← Customer 5 ← Customer 6
+├── Representative 4 ← Customer 7 ← Customer 8
+└── Representative 5 ← Customer 9 ← Customer 10
+```
+
+### 20.4 What Happens When a Customer Creates an Order
+
+1. The customer orders from the existing app or web account.
+2. The system reads the customer location and links the order to a zone.
+3. The system selects the customer price list.
+4. The system validates the payment method.
+5. For credit sales, credit limit and overdue balance are checked.
+6. The system checks available stock in the warehouse and section.
+7. If stock is available, the quantity is reserved for the order.
+8. If stock is not available, partial fulfillment or order hold is applied according to policy.
+9. After approval, the order appears for the warehouse keeper.
+10. After preparation, the order is assigned to one representative in the zone.
+
+### 20.5 How Five Representatives Work in the Same Zone
+
+- Each representative sees only assigned customers.
+- Each representative sees only assigned orders and route.
+- The zone supervisor sees the five representatives in the zone.
+- Management sees all zones and all representatives.
+- When a representative reaches the customer radius, arrival is recorded.
+- On delivery, order, invoice, stock, and balance are updated.
+- On collection, the amount remains in representative custody until settlement.
+
+## 21. Separate Role Journeys
+
+### 21.1 General Manager Journey
+
+1. Opens the admin dashboard.
+2. Reviews daily indicators.
+3. Monitors sales, collections, and receivables.
+4. Reviews zone and representative performance.
+5. Reviews low-stock and out-of-stock products.
+6. Approves exceptions such as credit-limit overrides or major adjustments.
+7. Exports final reports.
+
+### 21.2 Sales Manager Journey
+
+1. Reviews daily orders.
+2. Distributes orders by zones and representatives.
+3. Reviews customers with overdue balances.
+4. Monitors representative visits.
+5. Follows failed deliveries and reasons.
+6. Reviews representative targets and commissions.
+
+### 21.3 Zone Supervisor Journey
+
+1. Opens the zone map.
+2. Reviews the ten customers in the zone.
+3. Reviews the five representatives in the zone.
+4. Tracks representatives from their phones.
+5. Redistributes orders when workload changes or a representative is absent.
+6. Reviews the zone before day closure.
+
+### 21.4 Sales Representative Journey
+
+1. Logs in from the Android app.
+2. Starts the day and enables tracking.
+3. Receives assigned orders.
+4. Follows the suggested route.
+5. Records arrival for every customer.
+6. Delivers orders or records failure reasons.
+7. Records cash collection or old debt collection.
+8. Captures delivery or payment proof according to company policy.
+9. Ends the day and views expected cash.
+10. Hands over cash and closes custody.
+
+### 21.5 Warehouse Keeper Journey
+
+1. Opens the warehouse dashboard.
+2. Views picking requests for the assigned section.
+3. Picks quantities from assigned shelves.
+4. Records actual picked quantities.
+5. Sends the order to packing.
+6. Hands over the shipment to the representative.
+7. Reviews returns, stock counts, and daily movements.
+
+### 21.6 Accountant or Cashier Journey
+
+1. Reviews daily invoices.
+2. Reviews payment receipts.
+3. Matches expected cash with received cash.
+4. Records shortages or overages if found.
+5. Reviews customer balances and statements.
+6. Closes the daily financial settlement.
+
+### 21.7 Human Resources Officer Journey
+
+1. Reviews attendance and departure.
+2. Reviews leave requests.
+3. Records penalties or bonuses.
+4. Reviews advances and deductions.
+5. Approves monthly payroll.
+6. Exports employee reports.
+
+## 22. Human Resources System
+
+A full HR module is added to manage employees, representatives, warehouse keepers, and administrators.
+
+### 22.1 Employee Profile
+
+Each employee profile includes:
+
+- Name.
+- Employee number.
+- Job title.
+- Department.
+- Hiring date.
+- Basic salary.
+- Allowances.
+- Contract type.
+- Direct manager.
+- Employee status.
+- Documents.
+
+### 22.2 Attendance and Departure
+
+Attendance can be recorded through:
+
+- Admin dashboard.
+- Representative app for field representatives.
+- Phone location at day start and end.
+
+```text
+Check in
+↓
+Record time and location
+↓
+Calculate lateness if any
+↓
+Check out
+↓
+Calculate working hours
+↓
+Send data to payroll
+```
+
+### 22.3 Leave Requests
+
+1. The employee submits a leave request.
+2. The employee selects leave type, duration, and reason.
+3. The direct manager reviews the request.
+4. The request is approved or rejected.
+5. If approved, the leave balance is updated.
+6. The leave appears in attendance and payroll reports.
+
+### 22.4 Penalties and Deductions
+
+The system supports recording:
+
+- Lateness.
+- Absence.
+- Administrative violation.
+- Cash shortage.
+- Damage caused by operational error.
+- Manual deduction with management approval.
+
+### 22.5 Payroll
+
+Payroll is calculated as:
+
+```text
+Basic salary
++
+Allowances
++
+Commissions
++
+Bonuses
+-
+Deductions
+-
+Penalties
+-
+Advances
+=
+Net salary
+```
+
+Representative commission can be calculated based on total sales, collected sales, specific products, zones, or target achievement.
+
+### 22.6 Advances and Bonuses
+
+- Employee advances can be recorded.
+- Advance deductions can be scheduled from salary.
+- Manual or target-based bonuses can be added.
+
+### 22.7 HR Reports
+
+- Attendance report.
+- Lateness and absence report.
+- Leave report.
+- Penalties report.
+- Payroll report.
+- Commission report.
+- Advances and deductions report.
+
+## 23. Inventory Auto-Updates, Stock Count, and Reconciliation
+
+### 23.1 Auto-Update for Each Warehouse Section
+
+Each warehouse section has an independent balance. Any movement updates the related section immediately.
+
+```text
+Purchase received into Section A → increase Section A
+Sale from Section A → decrease Section A
+Transfer from Section A to Section B → decrease Section A and increase Section B after receiving
+Good return to Section B → increase Section B
+Damaged return → increase damaged stock, not sellable stock
+```
+
+### 23.2 Auto-Update for the Whole Warehouse
+
+The total warehouse balance equals the sum of all section balances.
+
+```text
+Main warehouse balance
+=
+Section A balance
++
+Section B balance
++
+Section C balance
++
+Section D balance
+```
+
+Whenever any section balance changes, the total warehouse balance is updated in reports and dashboards.
+
+### 23.3 Reservation Before Delivery
+
+To prevent selling the same quantity twice, the system uses reserved quantity.
+
+```text
+Available quantity for sale
+=
+Physical balance
+-
+Reserved quantity for approved orders
+```
+
+When an order is approved, the quantity is reserved. When delivery is completed, it is deducted from physical stock. When an order is cancelled, the reservation is released.
+
+### 23.4 Stock Count Methods
+
+The system supports multiple stock count methods.
+
+#### Full Stock Count
+
+Warehouse or section movement is paused temporarily, then all products are counted and compared with system balance.
+
+#### Cycle Count
+
+Selected product groups are counted periodically without stopping the whole warehouse.
+
+#### Surprise Count
+
+Management selects certain products or a section to verify balance unexpectedly.
+
+#### Barcode Count
+
+The employee uses a barcode scanner or phone camera to scan products and count quantities.
+
+### 23.5 Stock Reconciliation Cycle
+
+```text
+Open stock count session
+↓
+Select warehouse, section, or products
+↓
+Count physical quantities
+↓
+Compare physical count with system balance
+↓
+Show shortage or overage
+↓
+Review variance
+↓
+Approve adjustment
+↓
+Create stock ledger transaction
+↓
+Update final balance
+```
+
+## 24. Illustrative Diagrams
+
+### 24.1 Order, Warehouse, Delivery, and Finance Relationship
+
+```text
+Customer order
+↓
+Payment and balance review
+↓
+Stock check and reservation
+↓
+Picking and packing
+↓
+Representative handover
+↓
+Customer delivery
+↓
+Invoice
+↓
+Collection or receivable posting
+↓
+Stock and accounts update
+```
+
+### 24.2 Simplified Operating Map
+
+```text
+Admin dashboard
+│
+├── Customers ── Orders ── Invoices ── Collections
+│
+├── Warehouses ── Sections ── Stock count ── Stock ledger
+│
+├── Zones ── Customers ── Representatives ── Tracking
+│
+└── Human resources ── Attendance ── Leaves ── Payroll
+```
+
+### 24.3 End-of-Day Cycle
+
+```text
+Representative finishes visits
+↓
+System calculates sales and collections
+↓
+Representative submits cash
+↓
+Cashier reconciles cash
+↓
+Accountant reviews invoices and receipts
+↓
+Management approves closure
+↓
+Daily reports are ready
+```
+
+## 25. Important Notes Before Implementation
 
 - The business workflow must be approved before final screen design.
 - Product data, units, and conversions must be entered accurately.
